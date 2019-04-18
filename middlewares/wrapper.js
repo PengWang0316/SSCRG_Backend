@@ -11,7 +11,7 @@ const {
 const { STAGE } = process.env;
 
 const {
-  initializeMongoDB, sampleLogging,
+  initialMysqlPool, sampleLogging,
 } = require('@kevinwang0316/lambda-middlewares');
 // const functionShield = require('./function-shield');
 
@@ -25,12 +25,10 @@ module.exports = func => middy(func)
     cacheExpiryInMillis: 3 * 60 * 1000,
     setToContext: true, // Save the parameters to context instead of env. The parameters will just live in memory for the security concern.
     names: {
-      dbUrl: `/kairoscope/${STAGE}/db-host`,
+      dbHost: `/kairoscope/${STAGE}/db-host`,
+      dbUser: `/kairoscope/${STAGE}/db-user`,
+      dbPassword: `/kairoscope/${STAGE}/db-password`,
       dbName: `/kairoscope/${STAGE}/db-name`,
-      jwtSecret: `/kairoscope/${STAGE}/jwt-secret`,
-      redisHost: `/kairoscope/${STAGE}/redis-host`,
-      redisPort: `/kairoscope/${STAGE}/redis-port`,
-      redisPassword: `/kairoscope/${STAGE}/redis-password`,
       FUNCTION_SHIELD_TOKEN: `/kairoscope/${STAGE}/function_shield_token`,
     },
   }))
@@ -44,5 +42,5 @@ module.exports = func => middy(func)
     },
   }))
   .use(doNotWaitForEmptyEventLoop())
-  .use(initializeMongoDB);
+  .use(initialMysqlPool);
   // .use(verifyUser); Most of the functions in this service do not require users login
