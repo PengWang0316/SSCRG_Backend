@@ -29,7 +29,7 @@
     "@babel/runtime": "^7.4.2",
     "@kevinwang0316/cloudwatch": "^1.0.4",
     "@kevinwang0316/jwt-verify": "^1.0.2",
-    "@kevinwang0316/lambda-middlewares": "^1.0.1",
+    "@kevinwang0316/lambda-middlewares": "^1.0.2",
     "@kevinwang0316/log": "^1.0.1",
     "@kevinwang0316/mysql-helper": "^1.0.0",
     "@puresec/function-shield": "^1.2.6",
