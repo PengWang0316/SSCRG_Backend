@@ -84,4 +84,4 @@ functions:
     environment:
       async_metrics: true # Use this variable to control whether send the metrics to CloudWatch Async
     layers:
-      - ${cf:lambda-layers-dev.KairoscopeDependenciesLayerExport}
+      - ${cf:lambda-layers-dev.SscrgDependenciesLayerExport}
