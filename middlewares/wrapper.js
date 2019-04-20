@@ -25,10 +25,10 @@ module.exports = func => middy(func)
     cacheExpiryInMillis: 3 * 60 * 1000,
     setToContext: true, // Save the parameters to context instead of env. The parameters will just live in memory for the security concern.
     names: {
-      dbHost: `/kairoscope/${STAGE}/db-host`,
-      dbUser: `/kairoscope/${STAGE}/db-user`,
-      dbPassword: `/kairoscope/${STAGE}/db-password`,
-      dbName: `/kairoscope/${STAGE}/db-name`,
+      dbHost: `/sscrg/${STAGE}/db-host`,
+      dbUser: `/sscrg/${STAGE}/db-user`,
+      dbPassword: `/sscrg/${STAGE}/db-password`,
+      dbName: `/sscrg/${STAGE}/db-name`,
       FUNCTION_SHIELD_TOKEN: `/kairoscope/${STAGE}/function_shield_token`,
     },
   }))
