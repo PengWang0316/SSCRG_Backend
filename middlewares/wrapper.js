@@ -1,7 +1,8 @@
 'use strict';
 
 /*
- * A middleware to wrap some comman middlwares. So all function will have these middlewares automatically.
+ * A middleware to wrap some comman middlwares.
+ * So all function will have these middlewares automatically.
  */
 const middy = require('middy');
 const {
