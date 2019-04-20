@@ -38,7 +38,8 @@ provider:
     log_level: ${self:custom.logLevel.${self:custom.stage}, self:custom.logLevel.default} # The variable for the log function
     STAGE: ${self:custom.stage} # For DEFAULT_CONTEXT in log.js
     FUNCTION_SHIELD_TOKEN: ${ssm:/kairoscope/${self:custom.stage}/function_shield_token} # For using the Function Shield
-  iamRoleStatements:
+    POSTS_TABLE: Posts
+    iamRoleStatements:
     - Effect: Allow
       Action: cloudwatch:PutMetricData
       Resource: '*'
@@ -80,7 +81,7 @@ functions:
           path: /posts
           method: get
           cors: true
-    memorySize: 512
+    memorySize: 128
     environment:
       async_metrics: true # Use this variable to control whether send the metrics to CloudWatch Async
     layers:

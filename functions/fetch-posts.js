@@ -11,7 +11,7 @@ const handler = async (event, context) => {
   try {
     const { rows } = await cloudwatch.trackExecTime(
       'MySQL query latency',
-      () => queryAsync('SELECT * FROM posts WHERE userId = ?', [id]),
+      () => queryAsync('SELECT * FROM ?? WHERE userId = ?', [process.env.POSTS_TABLE, id]),
     );
     return { statusCode: 200, body: JSON.stringify(rows) };
   } catch (err) {

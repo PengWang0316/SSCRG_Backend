@@ -6,7 +6,7 @@
  */
 const middy = require('middy');
 const {
-  cors, functionShield, ssm, doNotWaitForEmptyEventLoop,
+  functionShield, ssm, doNotWaitForEmptyEventLoop,
 } = require('middy/middlewares');
 
 const { STAGE } = process.env;
