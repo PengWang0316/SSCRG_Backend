@@ -11,9 +11,8 @@ const {
 
 const { STAGE } = process.env;
 
-const {
-  initialMysqlPool, sampleLogging,
-} = require('@kevinwang0316/lambda-middlewares');
+const { sampleLogging } = require('@kevinwang0316/lambda-middlewares');
+const { initialMysqlPool } = require('@kevinwang0316/lambda-middlewares/mysql');
 // const functionShield = require('./function-shield');
 
 module.exports = func => middy(func)
