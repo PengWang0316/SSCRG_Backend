@@ -1,4 +1,4 @@
-service: kairoscope-hexagram-service
+service: sscrg-service
 
 plugins:
   - serverless-pseudo-parameters # Read the region and accout id
@@ -17,7 +17,7 @@ custom: # stage and logLevel for log function
     defaultInherit: true # All function will inherit from the provider's IAM role.
   prune:
     automatic: true
-    number: 3
+    number: 5
   # Use the serverless-plugin-aws-alerts to generate alarms in order to tragge a roll back for a canary deployment
   # alerts:
   #   stages:
@@ -38,11 +38,6 @@ provider:
     log_level: ${self:custom.logLevel.${self:custom.stage}, self:custom.logLevel.default} # The variable for the log function
     STAGE: ${self:custom.stage} # For DEFAULT_CONTEXT in log.js
     FUNCTION_SHIELD_TOKEN: ${ssm:/kairoscope/${self:custom.stage}/function_shield_token} # For using the Function Shield
-    hexagramsCollectionName: ${ssm:/kairoscope/${self:custom.stage}/hexagrams-collection-name}
-    jwtName: ${ssm:/kairoscope/${self:custom.stage}/jwt-name}
-    ADMINISTRATOR_ROLE: 1
-    redisKeyAllHexagram: allHexagram
-    redisKeyHexagrams: ${ssm:/kairoscope/${self:custom.stage}/redis-key-hexagrams}
   iamRoleStatements:
     - Effect: Allow
       Action: cloudwatch:PutMetricData
@@ -61,6 +56,9 @@ provider:
     - Effect: Allow
       Action: ssm:GetParameters*
       Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/kairoscope/${self:custom.stage}/*
+    - Effect: Allow
+      Action: ssm:GetParameters*
+      Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/sscrg/${self:custom.stage}/*
     
     #  # Give the function permission to use layers (Do not really need it)
     # - Effect: Allow
@@ -75,38 +73,12 @@ package:
     - Information.txt
 
 functions:
-  fetch-hexagrams:
-    handler: functions/fetch-hexagrams.handler
+  fetch-posts:
+    handler: functions/fetch-posts.handler
     events:
       - http:
-          path: /hexagrams
+          path: /posts
           method: get
-          cors: true
-    memorySize: 512
-    environment:
-      async_metrics: true # Use this variable to control whether send the metrics to CloudWatch Async
-    layers:
-      - ${cf:lambda-layers-dev.KairoscopeDependenciesLayerExport}
-
-  fetch-hexagram-based-on-img:
-    handler: functions/fetch-hexagram-based-on-img.handler
-    events:
-      - http:
-          path: /hexagram
-          method: get
-          cors: true
-    memorySize: 512
-    environment:
-      async_metrics: true # Use this variable to control whether send the metrics to CloudWatch Async
-    layers:
-      - ${cf:lambda-layers-dev.KairoscopeDependenciesLayerExport}
-  
-  update-hexagram:
-    handler: functions/update-hexagram.handler
-    events:
-      - http:
-          path: /hexagram
-          method: put
           cors: true
     memorySize: 512
     environment:
