@@ -6,12 +6,13 @@ const { queryAsync } = require('@kevinwang0316/mysql-helper');
 
 const wrapper = require('../middlewares/wrapper');
 
+const QUERY_SQL = 'SELECT p.message, p.timestamp, u.displayName FROM ?? AS p INNER JOIN ?? AS u ON p.userId = u.id ORDER BY p.timestamp DESC';
+
 const handler = async (event, context) => {
-  const { id } = event.queryStringParameters;
   try {
     const { rows } = await cloudwatch.trackExecTime(
       'MySQL query latency',
-      () => queryAsync('SELECT * FROM ?? WHERE userId = ?', [process.env.POSTS_TABLE, id]),
+      () => queryAsync(QUERY_SQL, [process.env.POSTS_TABLE, process.env.USERS_TABLE]),
     );
     return { statusCode: 200, body: JSON.stringify(rows) };
   } catch (err) {
