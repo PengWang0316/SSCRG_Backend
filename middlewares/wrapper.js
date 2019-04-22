@@ -29,7 +29,7 @@ module.exports = func => middy(func)
       dbUser: `/sscrg/${STAGE}/db-user`,
       dbPassword: `/sscrg/${STAGE}/db-password`,
       dbName: `/sscrg/${STAGE}/db-name`,
-      FUNCTION_SHIELD_TOKEN: `/kairoscope/${STAGE}/function_shield_token`,
+      FUNCTION_SHIELD_TOKEN: `/sscrg/${STAGE}/function_shield_token`,
     },
   }))
   .use(sampleLogging())
