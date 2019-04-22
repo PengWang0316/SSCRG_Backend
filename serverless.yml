@@ -37,7 +37,7 @@ provider:
   environment:
     log_level: ${self:custom.logLevel.${self:custom.stage}, self:custom.logLevel.default} # The variable for the log function
     STAGE: ${self:custom.stage} # For DEFAULT_CONTEXT in log.js
-    FUNCTION_SHIELD_TOKEN: ${ssm:/kairoscope/${self:custom.stage}/function_shield_token} # For using the Function Shield
+    FUNCTION_SHIELD_TOKEN: ${ssm:/sscrg/${self:custom.stage}/function_shield_token} # For using the Function Shield
     POSTS_TABLE: Posts
     USERS_TABLE: Users
     iamRoleStatements:
