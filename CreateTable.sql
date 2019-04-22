@@ -19,7 +19,9 @@ ALTER TABLE `Posts` ADD INDEX `posts_userId_timestamp` (userId, timestamp);
 
 CREATE TABLE IF NOT EXISTS Users (
   id VARCHAR(255) NOT NULL PRIMARY KEY,
-  displayName VARCHAR(255)
+  displayName VARCHAR(255)  NOT NULL,
+  avatar VARCHAR(255),
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 /* Testing
