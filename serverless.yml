@@ -17,7 +17,7 @@ custom: # stage and logLevel for log function
     defaultInherit: true # All function will inherit from the provider's IAM role.
   prune:
     automatic: true
-    number: 5
+    number: 10
   # Use the serverless-plugin-aws-alerts to generate alarms in order to tragge a roll back for a canary deployment
   # alerts:
   #   stages:
@@ -85,5 +85,18 @@ functions:
     memorySize: 128
     environment:
       async_metrics: true # Use this variable to control whether send the metrics to CloudWatch Async
+    layers:
+      - ${cf:lambda-layers-dev.SscrgDependenciesLayerExport}
+
+  add-user:
+    handler: functions/add-user.handler
+    events:
+      - http:
+          path: /user
+          method: post
+          cors: true
+    memorySize: 128
+    environment:
+      async_metrics: true
     layers:
       - ${cf:lambda-layers-dev.SscrgDependenciesLayerExport}
