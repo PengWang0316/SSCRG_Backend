@@ -7,12 +7,12 @@ const SSM = new AWS.SSM(); // Read paramters from EC2 paramter store
 
 let isInitialized = false;
 
-const getParameters = async keys => {
+const getParameters = async (keys) => {
   const prefix = '/sscrg/dev/';
   const req = { Names: keys.map(key => `${prefix}${key}`) };
   const resp = await SSM.getParameters(req).promise();
   const params = {};
-  resp.Parameters.forEach(param => { params[param.Name.substr(prefix.length)] = param.Value; });
+  resp.Parameters.forEach((param) => { params[param.Name.substr(prefix.length)] = param.Value; });
   return params;
 };
 
@@ -30,6 +30,8 @@ const init = () => new Promise(async (resolve, reject) => {
   process.env['db-name'] = params['db-name'];
   process.env['db-user'] = params['db-user'];
   process.env['db-password'] = params['db-password'];
+  process.env.USERS_TABLE = 'Users';
+  process.env.POSTS_TABLE = 'Posts';
 
   // User the awscred library to load credantial keys from the local profile.
   awscred.loadCredentials((err, data) => {
