@@ -1,4 +1,4 @@
-import { queryAsync, getPool } from '@kevinwang0316/mysql-helper';
+import { queryAsync, getPool, initialPool } from '@kevinwang0316/mysql-helper';
 
 import { invokeAddUser } from '../helpers/InvokeHelper';
 import initEvns from '../helpers/InitialEnvs';
@@ -16,6 +16,7 @@ describe('add-user: invoke the Get / endpoint', () => {
       dbUser: process.env['db-user'],
       dbPassword: process.env['db-password'],
     };
+    initialPool(context.dbHost, context.dbUser, context.dbPassword, context.dbName);
   });
 
   test('invoke add-user function', async () => {
