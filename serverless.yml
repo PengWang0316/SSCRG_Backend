@@ -76,7 +76,7 @@ functions:
     handler: functions/fetch-posts.handler
     events:
       - http:
-          path: /posts
+          path: /post
           method: get
           cors: true
     memorySize: 128
