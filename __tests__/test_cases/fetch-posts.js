@@ -43,7 +43,7 @@ describe('add-user: invoke the Get / endpoint', () => {
   // Clear up and close all connection in the pool
   afterAll(async () => {
     await queryAsync('DELETE FROM ?? WHERE id = ?', [process.env.USERS_TABLE, userId]);
-    // await queryAsync('DELETE FROM ?? WHERE userId = ?', [process.env.POSTS_TABLE, userId]);
+    await queryAsync('DELETE FROM ?? WHERE userId = ?', [process.env.POSTS_TABLE, userId]);
     getPool().end();
   });
 });
