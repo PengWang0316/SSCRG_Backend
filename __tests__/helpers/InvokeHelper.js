@@ -29,10 +29,11 @@ const signHttpRequest = (isIAM, realURL) => {
 
 // Invode the handler via a real api gateway to do the acceptance test
 const viaHttp = async (path, opts = { iam: false }, method = 'get') => new Promise(async (resolve, reject) => {
-  const url = `${process.env.TEST_ROOT}/${path}${opts.isJwt ? `&jwtMessage=${process.env.jwt}` : ''}`; // Add jwtMessage if requires
+  const url = `${process.env.TEST_ROOT}/${path}`;
   console.log(`Invoking via HTTP ${url}`);
   const headers = signHttpRequest(opts.iam, url);
-  if (opts.authHeader) headers.Authorization = opts.authHeader; // Set a Authorization header if function need a cognito user token
+  // Set a Authorization header if function need a cognito user token
+  if (opts.authHeader) headers.Authorization = opts.authHeader;
   const options = {
     method,
     url,
@@ -54,7 +55,8 @@ const viaHttp = async (path, opts = { iam: false }, method = 'get') => new Promi
 
 // Invoke the handler locally to do the integration test
 const viaHandler = (handlerName, event = {}, context = {}) => {
-  const handler = require(`${APP_ROOT}/functions/${handlerName}`).handler;
+  // eslint-disable-next-line import/no-dynamic-require
+  const { handler } = require(`${APP_ROOT}/functions/${handlerName}`);
 
   return new Promise((resolve, reject) => {
     const callback = (err, response) => {
@@ -69,20 +71,6 @@ const viaHandler = (handlerName, event = {}, context = {}) => {
   });
 };
 
-const invokeFetchHexagrams = (event, context) => isIntegrationTest
-  ? viaHandler('fetch-hexagrams', event, context)
-  : viaHttp(`hexagrams?query=${event.queryStringParameters}`, { iam: false, isJwt: false });
-
-const invokeFetchHexagramBasedOnImg = (event, context) => isIntegrationTest
-  ? viaHandler('fetch-hexagram-based-on-img', event, context)
-  : viaHttp(`hexagram?imgArray=${event.queryStringParameters.imgArray}`, { iam: false, isJwt: false });
-
-const invokeUpdateHexagram = (event, context) => isIntegrationTest
-  ? viaHandler('update-hexagram', event, context)
-  : viaHttp('hexagram', { iam: false, isJwt: false, body: JSON.parse(event.body) }, 'put');
-
-module.exports = {
-  invokeFetchHexagrams,
-  invokeFetchHexagramBasedOnImg,
-  invokeUpdateHexagram,
-};
+export const invokeAddUser = (event, context) => (isIntegrationTest
+  ? viaHandler('add-user', event, context)
+  : viaHttp(`users?query=${event.queryStringParameters}`, { iam: false, body: JSON.parse(event.body) }, 'post'));

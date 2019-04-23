@@ -40,7 +40,7 @@ provider:
     FUNCTION_SHIELD_TOKEN: ${ssm:/sscrg/${self:custom.stage}/function_shield_token} # For using the Function Shield
     POSTS_TABLE: Posts
     USERS_TABLE: Users
-    iamRoleStatements:
+  iamRoleStatements:
     - Effect: Allow
       Action: cloudwatch:PutMetricData
       Resource: '*'
@@ -55,9 +55,6 @@ provider:
       Resource:
         - '*'
     # Give the function permission to read paramters from the EC2 Parameter Store
-    - Effect: Allow
-      Action: ssm:GetParameters*
-      Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/kairoscope/${self:custom.stage}/*
     - Effect: Allow
       Action: ssm:GetParameters*
       Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/sscrg/${self:custom.stage}/*
