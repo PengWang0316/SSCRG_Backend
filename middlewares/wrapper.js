@@ -23,7 +23,9 @@ module.exports = func => middy(func)
   .use(ssm({
     cache: true,
     cacheExpiryInMillis: 3 * 60 * 1000,
-    setToContext: true, // Save the parameters to context instead of env. The parameters will just live in memory for the security concern.
+    // Save the parameters to context instead of env.
+    // The parameters will just live in memory for the security concern.
+    setToContext: true,
     names: {
       dbHost: `/sscrg/${STAGE}/db-host`,
       dbUser: `/sscrg/${STAGE}/db-user`,
@@ -43,4 +45,3 @@ module.exports = func => middy(func)
   }))
   .use(doNotWaitForEmptyEventLoop())
   .use(initialMysqlPool);
-  // .use(verifyUser); Most of the functions in this service do not require users login
