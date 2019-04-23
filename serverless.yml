@@ -97,3 +97,16 @@ functions:
       async_metrics: true
     layers:
       - ${cf:lambda-layers-dev.SscrgDependenciesLayerExport}
+  
+  add-post:
+    handler: functions/add-post.handler
+    events:
+      - http:
+          path: /post
+          method: post
+          cors: true
+    memorySize: 128
+    environment:
+      async_metrics: true
+    layers:
+      - ${cf:lambda-layers-dev.SscrgDependenciesLayerExport}
