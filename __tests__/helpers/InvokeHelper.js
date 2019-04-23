@@ -74,3 +74,7 @@ const viaHandler = (handlerName, event = {}, context = {}) => {
 export const invokeAddUser = (event, context) => (isIntegrationTest
   ? viaHandler('add-user', event, context)
   : viaHttp('user', { iam: false, body: JSON.parse(event.body) }, 'post'));
+
+export const invokeFetchPosts = (event, context) => (isIntegrationTest
+  ? viaHandler('fetch-posts', event, context)
+  : viaHttp('post'));
