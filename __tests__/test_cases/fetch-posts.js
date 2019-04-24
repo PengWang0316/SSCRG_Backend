@@ -6,7 +6,7 @@ import initEvns from '../helpers/InitialEnvs';
 let context;
 
 describe('add-user: invoke the Get / endpoint', () => {
-  const userId = `test_${Date.now()}`;
+  const userId = `test_${Date.now()}_${Math.random()}`;
   const displayName = `${userId}_testDisplayName`;
 
   beforeAll(async () => {
