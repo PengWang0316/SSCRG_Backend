@@ -20,7 +20,7 @@ describe('add-user: invoke the Get / endpoint', () => {
   });
 
   test('invoke add-user function', async () => {
-    const id = `test_${Date.now()}`;
+    const id = `test_${Date.now()}_${Math.random()}`;
     const displayName = `${id}_testDisplayName`;
     const body = { id, displayName, avatar: 'avatar url' };
     const event = { body: JSON.stringify(body) };
